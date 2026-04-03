@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\News;
 use App\Models\Ad;
-use illuminate\Support\Str;
+use Illuminate\Support\Str;
 
 class AdminController extends Controller
 {
@@ -16,7 +16,6 @@ class AdminController extends Controller
 
         return view('home.admin', compact('news', 'ads'));
     }
-
 
     public function storeNews(Request $request)
     {
@@ -29,7 +28,6 @@ class AdminController extends Controller
         $imagePath = null;
 
         if ($request->hasFile('image')) {
-
             $file = $request->file('image');
             $fileName = time() . '_' . $file->getClientOriginalName();
             $file->move(public_path('uploads/news'), $fileName);
@@ -54,6 +52,7 @@ class AdminController extends Controller
         $news = News::findOrFail($id);
         return view('home.editNews', compact('news'));
     }
+
 
     // Xəbəri redaktə edib yadda saxla
     public function editNews(Request $request, $id)
@@ -99,7 +98,6 @@ class AdminController extends Controller
         return back()->with('success', 'Xəbər silindi');
     }
 
-
     // ================= ADS =================
 
     public function storeAd(Request $request)
@@ -110,7 +108,6 @@ class AdminController extends Controller
         ]);
 
         $file = $request->file('video');
-
         $fileName = time() . '_' . $file->getClientOriginalName();
         $file->move(public_path('uploads/ads'), $fileName);
 
@@ -121,7 +118,6 @@ class AdminController extends Controller
 
         return back()->with('success', 'Reklam əlavə edildi');
     }
-
 
     public function deleteAd($id)
     {

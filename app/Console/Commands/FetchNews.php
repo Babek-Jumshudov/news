@@ -6,21 +6,41 @@ use Illuminate\Console\Command;
 use App\Models\News;
 use Illuminate\Support\Facades\Http;
 
-
 class FetchNews extends Command
 {
-
     protected $signature = 'news:fetch';
-    protected $description = 'Fetch news from RSS feeds and NewsAPI';
+    protected $description = 'Fetch news from RSS feeds';
 
-    // RSS feed-lər
     protected $feeds = [
-        'https://oxu.az/rss',                   // Oxu.az
-        'https://qafqazinfo.az/rss',            // Qafqazinfo
-        'https://milli.az/rss',                 // Milli.az
-        'https://trend.az/rss.xml',             // Trend
-        'https://feeds.bbci.co.uk/news/rss.xml' // BBC Dünya
+        'https://apa.az/rss',
+        'https://report.az/rss/',
+        'https://azertag.az/rss',
+        'https://oxu.az/rss',
+        'https://qafqazinfo.az/rss',
+        'https://milli.az/rss',
+        'https://trend.az/rss.xml',
+        'https://feeds.bbci.co.uk/news/rss.xml'
     ];
+
+    protected function translateToAzerbaijani(string $text): string
+    {
+        if (empty($text))
+            return $text;
+
+        try {
+            $response = Http::post('https://libretranslate.com/translate', [
+                'q' => $text,
+                'source' => 'en',
+                'target' => 'az',
+                'format' => 'text'
+            ]);
+
+            return $response->json('translatedText') ?? $text;
+
+        } catch (\Exception $e) {
+            return $text;
+        }
+    }
 
     public function handle()
     {
@@ -29,12 +49,11 @@ class FetchNews extends Command
         $this->info('News fetched successfully!');
     }
 
-    // NewsAPI-dən xəbər çəkmək
     protected function fetchFromApi(): void
     {
         $response = Http::get('https://newsapi.org/v2/top-headlines', [
             'country' => 'us',
-            'apiKey' => env('NEWSAPI_KEY') // .env-də saxla
+            'apiKey' => env('NEWSAPI_KEY')
         ]);
 
         if ($response->successful()) {
@@ -44,30 +63,40 @@ class FetchNews extends Command
                 if (empty($article['url']))
                     continue;
 
+                $link = $article['url'];
+                $image = $article['urlToImage'] ?? null;
+                $published = $article['publishedAt'] ?? now();
+                $titleAZ = $this->translateToAzerbaijani($article['title'] ?? '');
+                $contentAZ = $this->translateToAzerbaijani($article['description'] ?? '');
+
                 News::updateOrCreate(
-                    ['link' => $article['url']],
+                    ['link' => $link],
                     [
-                        'title' => $article['title'] ?? '',
-                        'content' => $article['description'] ?? '',
-                        'image' => $article['urlToImage'] ?? null,
-                        'published_at' => $article['publishedAt'] ?? now()
+                        'title' => $titleAZ,
+                        'content' => $contentAZ,
+                        'image' => $image,
+                        'published_at' => $published
                     ]
                 );
             }
         }
     }
 
-    // RSS feed-lərdən xəbər çəkmək
     protected function fetchFromRssFeeds(): void
     {
         foreach ($this->feeds as $feedUrl) {
             try {
-                // RSS-i HTTP ilə çəkmək
-                $response = Http::get($feedUrl);
-                if (!$response->ok())
-                    continue;
+                $context = stream_context_create([
+                    'http' => ['header' => "User-Agent: Mozilla/5.0\r\n"]
+                ]);
 
-                $rss = @simplexml_load_string($response->body());
+                $xmlString = @file_get_contents($feedUrl, false, $context);
+                if (!$xmlString) {
+                    $this->error("RSS feed alınmadı: $feedUrl");
+                    continue;
+                }
+
+                $rss = @simplexml_load_string($xmlString);
                 if (!$rss || !isset($rss->channel->item))
                     continue;
 
@@ -81,11 +110,14 @@ class FetchNews extends Command
                         ? date('Y-m-d H:i:s', strtotime($item->pubDate))
                         : now();
 
+                    $titleAZ = $this->translateToAzerbaijani((string) $item->title);
+                    $contentAZ = $this->translateToAzerbaijani(strip_tags((string) $item->description));
+
                     News::updateOrCreate(
                         ['link' => $link],
                         [
-                            'title' => (string) $item->title,
-                            'content' => strip_tags((string) $item->description),
+                            'title' => $titleAZ,
+                            'content' => $contentAZ,
                             'image' => $image,
                             'published_at' => $published
                         ]
@@ -93,17 +125,16 @@ class FetchNews extends Command
                 }
 
             } catch (\Exception $e) {
-                $this->error("Failed to fetch RSS feed: $feedUrl");
+                $this->error("Xəta: " . $e->getMessage());
             }
         }
     }
 
-    // RSS item-dən şəkil çıxarma funksiyası
     protected function extractImage($item): ?string
     {
         $image = null;
-
         $namespaces = $item->getNameSpaces(true);
+
         if (isset($namespaces['media'])) {
             $media = $item->children($namespaces['media']);
             if (isset($media->thumbnail)) {
@@ -113,37 +144,11 @@ class FetchNews extends Command
             }
         }
 
-        // description içində <img> varsa çıxart
         if (!$image && isset($item->description)) {
             preg_match('/<img.+src=[\'"](?P<src>.+?)[\'"].*>/i', $item->description, $matches);
             $image = $matches['src'] ?? null;
         }
 
         return $image;
-    }
-}
-
-class NewsController extends Controller
-{
-    // Xəbərləri list etmək
-    public function index()
-    {
-        $news = News::latest()->paginate(5);
-
-        return view('home.index', compact('news'));
-    }
-
-    // Xəbəri silmək
-    public function delete($id)
-    {
-        $news = News::findOrFail($id);
-
-        if ($news->image && file_exists(public_path($news->image))) {
-            unlink(public_path($news->image));
-        }
-
-        $news->delete();
-
-        return back()->with('success', 'Xəbər silindi!');
     }
 }

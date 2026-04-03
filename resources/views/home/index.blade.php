@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    <header>
+    <!-- <header>
         <div class="header">
             <div class="header-top">
                 <div class="logo-img">
@@ -33,97 +33,99 @@
                 <h3 data-aos="fade-up">Babek Jumshudov </h3>
             </div>
         </div>
-    </header>
+    </header> -->
+    <div class="container"></div>
+        <section>
 
-    <section>
 
+            <div class="main-content">
+                <!-------------------------Blog CONTENT Start---------------------------------------------------------------->
 
-        <div class="main-content">
-            <!-------------------------Blog CONTENT Start---------------------------------------------------------------->
+                <div class="blog-wrapper">
 
-            <div class="blog-wrapper">
+                    @foreach($news as $item)
+                        @if($item->image == null)
 
-                @foreach($news as $item)
-                    @if($item->image == null)
+                        @else
+                            <br> <br>
+                            <div class="blog-content">
 
-                    @else
-                        <hr> <br>
-                        <div class="blog-content">
+                                <div data-aos="fade-right">
 
-                            <div data-aos="fade-right">
+                                    @if($item->image)
+                                        <img src="{{ $item->image }}" width="100%" alt="news image">
+                                    @else
+                                        <img src="/images/default-news.jpg" width="50px" alt="default image">
+                                    @endif
 
-                                @if($item->image)
-                                    <img src="{{ $item->image }}" width="100%" alt="news image">
-                                @else
-                                    <img src="/images/default-news.jpg" width="50px" alt="default image">
-                                @endif
+                                </div>
+                                <div class="blog-details" data-aos="fade-down">
+                                    {{ $item->published_at }}
+                                </div>
+                                <div class="blog-title" data-aos="flip-left">
+                                    <h2>{{ $item->title }}</h2>
+                                </div>
+                                <div class="blog-text" data-aos="fade-up">
+                                    <p>{{ $item->content }}</p>
 
+                                </div>
+                                <div class="blog-read-more" data-aos="fade-right">
+                                    <a style="color: red;" href="{{ $item->link }}">Daha ətraflı...</a>
+                                </div>
                             </div>
-                            <div class="blog-details" data-aos="fade-down">
-                                {{ $item->published_at }}
-                            </div>
-                            <div class="blog-title" data-aos="flip-left">
-                                <h2>{{ $item->title }}</h2>
-                            </div>
-                            <div class="blog-text" data-aos="fade-up">
-                                <p>{{ $item->content }}</p>
-
-                            </div>
-                            <div class="blog-read-more" data-aos="fade-right">
-                                <a style="color: red;" href="{{ $item->link }}">Daha ətraflı...</a>
-                            </div>
-                        </div>
-                    @endif
-                @endforeach
+                            <hr><br>
+                        @endif
+                    @endforeach
 
 
-                <div class="pages" data-aos="fade-up">
-                    <a href="#!" class="page-list-active">1</a>
-                    <a href="#!" class="page-list">2</a>
-                    <a href="#!" class="page-list">3</a>
-                    <a href="#!" class="page-list">4</a>
-                    <a href="#!" class="page-list">...</a>
-                    <a href="#!" class="page-list">Sonuncu</a>
+                    <div class="pages" data-aos="fade-up">
+                        <a href="#!" class="page-list-active">1</a>
+                        <a href="#!" class="page-list">2</a>
+                        <a href="#!" class="page-list">3</a>
+                        <a href="#!" class="page-list">4</a>
+                        <a href="#!" class="page-list">...</a>
+                        <a href="#!" class="page-list">Sonuncu</a>
+                    </div>
+
+
                 </div>
 
 
-            </div>
+                <!-----------------------------------------------Sidebar Start------------------------------------------>
 
 
-            <!-----------------------------------------------Sidebar Start------------------------------------------>
+                <div class="sidebar">
+
+                    <div class="widget-reklam" data-aos="fade-down-left">
+                        <div class="widget-shaddow">
 
 
-            <div class="sidebar">
+                            <video autoplay loop muted playsinline width="300">
+                                <source src="{{ asset('/video/reklam.mp4') }}" type="video/mp4">
+                                Brauzeriniz video etiketini desteklemir..((
 
-
-
-                <div class="widget-reklam" data-aos="fade-down-left">
-                    <div class="widget-shaddow">
-
-
-                        <video autoplay loop muted playsinline width="300">
-                            <source src="{{ asset('/video/reklam.mp4') }}" type="video/mp4">
-                            Brauzeriniz video etiketini desteklemir..((
-
-                                </video>
+                            </video>
                             <button class="btn" onclick="toggleSound(this)">Səs</button>
 
                             <script>
                                 function toggleSound(btn) {
-                                    const video = btn.previousElementSibling; 
+                                    const video = btn.previousElementSibling;
                                     video.muted = !video.muted;
                                 }
                             </script>
-                         <a href="https://www.instagram.com/reel/DVJDRjFDgAY/?igsh=MWoyZDZsOXp1NWZmYg=="
+                            <a href="https://www.instagram.com/reel/DVJDRjFDgAY/?igsh=MWoyZDZsOXp1NWZmYg=="
                                 target="_blank" rel="noopener noreferrer">daha etrafli.. </a>
+                        </div>
+
                     </div>
+
                 </div>
-
             </div>
-        </div>
-    </section>
+        </section>
 
-    <footer>
+    
+
+    <!-- <footer>
         <div class="footer-content">
             <div class="footer-menu">
 
@@ -190,7 +192,7 @@
         <div class="footer-end" data-aos="flip-right">
             &copy; 2019 Bütün hüquqlar qorunur.
         </div>
-    </footer>
+    </footer> -->
     <!-----------------------------------------------Footer END------------------------------------------>
 
 
