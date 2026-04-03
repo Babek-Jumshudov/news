@@ -1,0 +1,411 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+}
+
+li {
+    list-style: none;
+}
+/*font-family: 'Montserrat', sans-serif;*/
+
+body {
+    font-size: 17px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.main-content {
+    max-width: 1170px;
+    margin-right: auto;
+    display: flex;
+    justify-content: space-evenly
+
+}
+
+header {
+    margin-bottom: 150px;
+}
+/* Header TOP START */
+.header {
+    background-image: url("../images/blog-img-3.jpg");
+    background-repeat: no-repeat;
+    height: 100%;
+    background-size: cover;
+    padding-bottom: 365px;
+}
+
+.header-top {
+    max-width: 1430px;
+    display: flex;
+    justify-content: space-between;
+    padding: 70px 90px;
+    align-items: center;
+    margin-bottom: 95px;
+}
+
+/* Header TOP END */
+
+.logo-img {
+    position: relative;
+}
+
+.logo a {
+    font-size: 36px;
+    color: #000;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+}
+
+
+
+
+.list-menu {
+    display: flex;
+    justify-content: space-between;
+}
+
+.list-menu-item-active {
+    font-size: 16px;
+    font-weight: 900;
+    color: #000;
+    border: none;
+    border-radius: 25px;
+    background-color: #fff;
+    padding: 10px 25px;
+    margin-right: 25px;
+
+}
+
+.list-menu-item {
+    font-size: 16px;
+    font-weight: 900;
+    color: #2c0e0e;
+    border: none;
+    background-color: transparent;
+    padding: 10px 25px;
+    margin-right: 25px;
+    transition: .5s;
+}
+
+.list-menu-item:hover {
+    color: #000;
+    border: none;
+    border-radius: 25px;
+    background-color: #fff;
+    padding: 10px 25px;
+}
+
+
+/* header bottom start*/
+
+.header-bottom {
+    margin: auto;
+    text-align: center;
+}
+
+.header-bottom-title {
+    font-size: 25px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 24px;
+}
+
+.header-bottom h3 {
+    font-size: 58px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: 0.4px;
+}
+
+
+/* Header END */
+
+
+/* Section Start */
+
+.blog-content {
+    width: 770px;
+    margin-bottom: 80px;
+}
+
+
+
+.blog-details {
+    font-size: 16px;
+    color: #bebebe;
+    margin-bottom: 13px;
+}
+
+.blog-title h3 {
+    font-size: 28px;
+    font-weight: 900;
+    color: #1d1d1d;
+    margin-bottom: 28px;
+}
+
+.blog-text p {
+    color: #8d8d8d;
+    margin-bottom: 30px;
+}
+
+.blog-read-more a {
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #000;
+}
+
+/* Blog Page START */
+
+.pages {
+   display: inline-block;
+   margin-bottom: 179px;
+   position: relative;
+   margin-left: 18px;
+}
+
+.page-list-active {
+    font-size: 20px;
+    font-weight: 700;
+    color: #FF1E23;
+    margin-right: 7px;
+}
+
+.page-list-active::before {
+    content: '';
+    background-image: url('img/left-arrow.svg');
+    background-repeat: no-repeat;
+    background-size: 100%;
+    width: 18px;
+    height: 18px;
+    position: absolute;
+    top: 3px;
+    left: -18px;
+}
+
+.page-list {
+    font-size: 20px;
+    font-weight: 700;
+    color: #000;
+    margin-right: 7px;
+    transition: .2s;
+}
+
+.page-list::after {
+    content: '';
+    background-image: url('img/right-arrow.svg');
+    background-repeat: no-repeat;
+    background-size: 100%;
+    width: 18px;
+    height: 18px;
+    position: absolute;
+    top: 4px;
+    right: -11px;
+}
+
+.page-list-last:hover {
+    color:  #FF1E23;
+}
+
+.page-list:hover {
+    color: #FF1E23;
+}
+
+/* Blog Page End */
+
+
+
+
+/*-------------------------Widget Reklam start----------------------------------------------------------------*/
+.widget-reklam {
+    width: 350px;
+    background-image: url('img/advertise.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    cursor: pointer;
+    position: absolute;
+}
+
+.widget-shaddow {
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 11px;
+}
+
+
+
+.widget-reklam-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 30px;
+    
+}
+
+.widget-reklam-about {
+    font-size: 22px;
+    font-weight: 700;
+    text-align: center;
+    color: #fff;
+}
+
+/*-------------------------Widget Reklam End----------------------------------------------------------------*/
+
+
+
+/*-------------------------Footer START----------------------------------------------------------------*/
+
+footer {
+    border-top: 1px solid #DAE0E1;
+}
+
+.footer-content {
+    max-width: 1170px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 100px;
+}
+
+.footer-menu {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 110px;
+    
+}
+
+.footer-menu-contact {
+    position: relative;
+}
+
+.footer-logo::after {
+    content: '';
+    display: inline-block;
+    border: 1px solid #000;
+    border-radius: 50%;
+    background-color: transparent;
+    width: 15px;
+    height: 15px;
+    position: absolute;
+    top: -5px;
+    left: 64px;
+    cursor: pointer;
+}
+
+.footer-logo a {
+    font-size: 36px;
+    color: #000;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    line-height: 0.8;
+}
+
+.menu-contact-email {
+    font-size: 18px;
+    color: #8c8e91;
+    margin-top: 34px;
+}
+
+.menu-contact-phone {
+    font-size: 20px;
+    color: #282828;
+    margin-top: 20px;
+}
+
+ 
+.services-title {
+    font-size: 20px;
+    color: #000;
+    margin-bottom: 32px;
+    text-transform: uppercase;
+}
+
+  
+.services-list-item {
+    margin-bottom: 25px;
+}
+
+.services-list-item a {
+    color: #8c8e91;
+    transition: .2s;   
+}
+.services-list-item a:hover {
+    color: #000;
+}
+
+ 
+.location-text {
+    max-width: 262px;
+    color: #8c8e91;
+    margin-bottom: 35px;
+}
+
+/*------------------------Social Start -------------*/
+
+.social {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px 0 0;
+}
+
+.facebook {
+    background-image: url('img/fb.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.facebook:hover {
+    background-image: url('img/fb-hover.svg');
+    transition: .4s;
+}
+
+.twitter {
+    background-image: url('img/twitter.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.twitter:hover {
+    background-image: url('img/twitter-hover.svg');
+    transition: .4s;
+}
+
+.gmail {
+    background-image: url('img/gmail.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.gmail:hover {
+    background-image: url('img/gmail-hover.svg');
+    transition: .4s;
+}
+
+.footer-end {
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+
+/*-------------------------FOOTER END----------------------------------------------------------------*/
